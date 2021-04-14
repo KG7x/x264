@@ -27,7 +27,7 @@ jobs:
     steps:
     - uses: msys2/setup-msys2@v2
       with:
-        install: ${{ matrix.prefix }}-binutils ${{ matrix.prefix }}-make ${{ matrix.prefix }}-${{ matrix.cc }}
+        install: nasm
         msystem: ${{ matrix.msystem }}
         path-type: minimal
         release: false
