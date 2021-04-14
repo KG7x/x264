@@ -14,11 +14,11 @@ jobs:
         include:
           - arch: x86
             msystem: MINGW32
-            prefix: mingw-w64-i686
+            prefix: i686-w64-mingw32
 
           - arch: x86_64
             msystem: MINGW64
-            prefix: mingw-w64-x86_64
+            prefix: x86_64-w64-mingw32
 
     defaults:
       run:
@@ -39,8 +39,8 @@ jobs:
 
     - name: Build
       run: |
-        ./configure --enable-static --bit-depth=8 --disable-swscale --disable-lavf --disable-ffms --disable-gpac --disable-opencl --disable-interlaced --disable-lsmash --disable-gpl --enable-strip
+        ./configure --host=${{ matrix.prefix }} --enable-static --bit-depth=8 --disable-swscale --disable-lavf --disable-ffms --disable-gpac --disable-opencl --disable-interlaced --disable-lsmash --disable-gpl --enable-strip
         make -j 4
         make clean ARCH=${{ matrix.arch }}
-        ./configure --enable-static --bit-depth=10 --disable-swscale --disable-lavf --disable-ffms --disable-gpac --disable-opencl --disable-interlaced --disable-gpl --disable-lsmash --enable-strip
+        ./configure --host=${{ matrix.prefix }} --enable-static --bit-depth=10 --disable-swscale --disable-lavf --disable-ffms --disable-gpac --disable-opencl --disable-interlaced --disable-gpl --disable-lsmash --enable-strip
         make -j 4
