@@ -41,11 +41,11 @@ jobs:
       run: |
         ./configure --host=${{ matrix.prefix }} --enable-static --bit-depth=8 --disable-swscale --disable-lavf --disable-ffms --disable-gpac --disable-opencl --disable-interlaced --disable-lsmash --disable-gpl --enable-strip
         make -j 4
-        mv x264.exe x264_8.exe
+        mv x264.exe x264_${{ matrix.prefix }}_8.exe
         make clean
         ./configure --host=${{ matrix.prefix }} --enable-static --bit-depth=10 --disable-swscale --disable-lavf --disable-ffms --disable-gpac --disable-opencl --disable-interlaced --disable-gpl --disable-lsmash --enable-strip
         make -j 4
-        mv x264.exe x264_10.exe
+        mv x264.exe x264_${{ matrix.prefix }}_10.exe
 
     - uses: actions/upload-artifact@v2
       with:
