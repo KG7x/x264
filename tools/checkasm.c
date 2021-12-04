@@ -262,7 +262,7 @@ intptr_t (*x264_checkasm_call)( intptr_t (*func)(), int *ok, ... ) = x264_checka
  * assembly function through x264_checkasm_call with added dummy arguments which forces all
  * real arguments to be passed on the stack and not in registers. For 32-bit argument the
  * upper half of the 64-bit register location on the stack will now contain junk. Note that
- * this is dependant on compiler behaviour and that interrupts etc. at the wrong time may
+ * this is dependent on compiler behaviour and that interrupts etc. at the wrong time may
  * overwrite the junk written to the stack so there's no guarantee that it will always
  * detect all functions that assumes zero-extension.
  */
@@ -2383,7 +2383,7 @@ static int check_quant( uint32_t cpu_ref, uint32_t cpu_new )
         { \
             int nnz = 0; \
             int max = rand() & (size-1); \
-            memset( dct1, 0, size*sizeof(dctcoef) ); \
+            memset( dct1, 0, 64*sizeof(dctcoef) ); \
             for( int idx = ac; idx < max; idx++ ) \
                 nnz |= dct1[idx] = !(rand()&3) + (!(rand()&15))*rand(); \
             if( !nnz ) \
@@ -2417,7 +2417,7 @@ static int check_quant( uint32_t cpu_ref, uint32_t cpu_new )
             x264_run_level_t runlevel_c, runlevel_a; \
             int nnz = 0; \
             int max = rand() & (size-1); \
-            memset( dct1, 0, size*sizeof(dctcoef) ); \
+            memset( dct1, 0, 64*sizeof(dctcoef) ); \
             memcpy( &runlevel_a, buf1+i, sizeof(x264_run_level_t) ); \
             memcpy( &runlevel_c, buf1+i, sizeof(x264_run_level_t) ); \
             for( int idx = ac; idx < max; idx++ ) \
@@ -2958,7 +2958,7 @@ REALIGN_STACK int main( int argc, char **argv )
         argv++;
     }
 
-    int seed = ( argc > 1 ) ? atoi(argv[1]) : x264_mdate();
+    unsigned seed = ( argc > 1 ) ? strtoul(argv[1], NULL, 0) : x264_mdate();
     fprintf( stderr, "x264: using random seed %u\n", seed );
     srand( seed );
 
