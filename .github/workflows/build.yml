@@ -33,7 +33,7 @@ jobs:
         release: false
         update: false
 
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
       with:
         submodules: recursive
 
@@ -47,7 +47,7 @@ jobs:
         make -j 4
         mv x264.exe x264_${{ matrix.arch }}_10.exe
 
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v3
       with:
         name: Windows (GCC)
         path: x264_*.exe
